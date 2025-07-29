@@ -5,6 +5,7 @@ import {decode} from 'html-entities';
 import QuestionRow from "./QuestionRow"
 export default function QuizScreen() {
     const [questions, setQuestions] = useState([])
+    const [isQuizDone, setIsQuizDone] = useState(false)
     async function fetchQuestions() {
         try {
             const response = await fetch("https://opentdb.com/api.php?amount=5&category=9&difficulty=medium&type=multiple")
@@ -18,7 +19,8 @@ export default function QuizScreen() {
                     ...questionInfo,
                     question: decode(questionInfo.question),
                     all_choices: allChoices,
-                    selected_choice: null
+                    selected_choice: null,
+                    userScore: null
                 })
             }))
             return dataResults
@@ -45,20 +47,37 @@ export default function QuizScreen() {
         fetchQuestions();
     }, []) // on first render
 
+    function checkAnswers() {
+       setQuestions(prev => prev.map((questionInfo, index) => {
+            return ({
+                ...questionInfo,
+                userScore: questionInfo.correct_answer == questionInfo.selected_choice
+            })
+       }))
+       setIsQuizDone(true)
+    }
+
+    // useEffect(()=> { // FOR TESTING
+    //     if (isQuizDone) {
+    //         console.log("STATE OF QUESTIONS:", questions)
+    //     }
+    // }, [isQuizDone])
     return (
         <div>
             <main id="questions-area">
                 {questions.length > 0 && questions.map((questionInfo, index)=> {
                     return (
-                        <QuestionRow 
+                        <QuestionRow
+                            key={index} 
                             info={questionInfo} 
                             index={index} 
                             updateChoices={updateChoices}
+                            isQuizDone={isQuizDone}
                         />
                     )
                 })}
             </main>
-            <button id="submit-btn">Check answers</button>
+            <button id="submit-btn" onClick={checkAnswers}>Check answers</button>
         </div>
     )
 }

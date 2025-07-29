@@ -1,8 +1,8 @@
 import { clsx } from "clsx";
 
 
-export default function QuestionRow({info, index, updateChoices}) {
-    const { question, all_choices: allChoices, selected_choice: selected } = info
+export default function QuestionRow({info, index, updateChoices, isQuizDone}) {
+    const { question, all_choices: allChoices, selected_choice: selected, correct_answer: correctAns } = info
     return (
         <section key={index}>
             <h2>{question}</h2>
@@ -11,7 +11,13 @@ export default function QuestionRow({info, index, updateChoices}) {
                     return (
                         <button 
                         key={choice} 
-                        className={clsx({"selected": choice == selected})}
+                        className={clsx({
+                            "selected": choice == selected,
+                            // if quiz is done (submitted)
+                            "correct-answer": isQuizDone && choice === correctAns,
+                            "selected-incorrect": isQuizDone && choice == selected && choice != correctAns,
+                            "not-selected": isQuizDone && choice != selected && choice !== correctAns
+                        })}
                         onClick={()=> updateChoices(index, choice)}
                         >
                             {choice}
