@@ -24,6 +24,7 @@ export default function QuizScreen() {
                     question: decode(questionInfo.question),
                     all_choices: allChoices,
                     selected_choice: null,
+                    correct_answer: decode(questionInfo.correct_answer),
                     userScore: null
                 })
             }))
@@ -52,16 +53,20 @@ export default function QuizScreen() {
     }, []) // on first render
 
     function checkAnswers() {
-       let correctCount = 0
-       setQuestions(prev => prev.map((questionInfo, index) => {
-            if (questionInfo.correct_answer == questionInfo.selected_choice) correctCount++
-            return ({
-                ...questionInfo,
-                userScore: questionInfo.correct_answer == questionInfo.selected_choice
+       
+       setQuestions(prev => {
+            let correctCount = 0
+            const updatedPrev = prev.map((questionInfo, index) => {
+                if (questionInfo.correct_answer == questionInfo.selected_choice) correctCount++
+                return ({
+                    ...questionInfo,
+                    userScore: questionInfo.correct_answer == questionInfo.selected_choice
+                })
             })
-       }))
-       setIsQuizDone(true)
-       setNumOfCorrect(correctCount)
+            setIsQuizDone(true)
+            setNumOfCorrect(correctCount)
+            return updatedPrev
+        })
     }
 
     function resetQuiz() {
@@ -69,11 +74,11 @@ export default function QuizScreen() {
         // setIsQuizDone(false)
          location.reload();
     }
-    // useEffect(()=> { // FOR TESTING
-    //     if (isQuizDone) {
-    //         console.log("STATE OF QUESTIONS:", questions)
-    //     }
-    // }, [isQuizDone])
+    useEffect(()=> { // FOR TESTING
+        if (isQuizDone) {
+            console.log("STATE OF QUESTIONS:", questions)
+        }
+    }, [isQuizDone])
     return (
         <div>
             <main id="questions-area">
