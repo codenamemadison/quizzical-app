@@ -1,15 +1,11 @@
-# React + Vite
+# Quizzicial App
+A **React-based web application** that serves as a quiz platform, in which users are quizzed on questions from [The Open Trivia Database](https://opentdb.com/api_config.php) and are graded when they are done, with the ability to view visually what they got wrong and right.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+*Note: This was a project built by me while following the "Learn React" Scrimba certification course, in which the course provided the design and concept. Project with built with no guidance.*
 
-Currently, two official plugins are available:
+## Links
+<a href="https://www.figma.com/file/E9S5iPcm10f0RIHK8mCqKL/Quizzical-App?node-id=0%3A1" target="_blank">Figma file</a> – created by Scrimba <br>
+Launch the app [here]()
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-
-
-# FIGMA: https://www.figma.com/file/E9S5iPcm10f0RIHK8mCqKL/Quizzical-App?node-id=0%3A1
+## How to run locally
+Run <pre> ```npm run dev ``` </pre>
