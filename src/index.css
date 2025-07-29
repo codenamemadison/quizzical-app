@@ -172,7 +172,7 @@ h2 {
   margin: 10px;
   border: none;
   font-size: 1rem;
-  border-radius: 18px;
+  border-radius: 25px;
   font-weight: 600;
 }
 
@@ -187,3 +187,14 @@ h2 {
   width: 100%;
 }
 
+#submit-section {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+#submit-section > p {
+  font-weight: 700;
+}

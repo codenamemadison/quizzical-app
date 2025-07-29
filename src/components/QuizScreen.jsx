@@ -6,6 +6,10 @@ import QuestionRow from "./QuestionRow"
 export default function QuizScreen() {
     const [questions, setQuestions] = useState([])
     const [isQuizDone, setIsQuizDone] = useState(false)
+
+    // derived values
+    const numOfQuestions = questions.length
+    const [numOfCorrect, setNumOfCorrect] = useState(null)
     async function fetchQuestions() {
         try {
             const response = await fetch("https://opentdb.com/api.php?amount=5&category=9&difficulty=medium&type=multiple")
@@ -48,15 +52,23 @@ export default function QuizScreen() {
     }, []) // on first render
 
     function checkAnswers() {
+       let correctCount = 0
        setQuestions(prev => prev.map((questionInfo, index) => {
+            if (questionInfo.correct_answer == questionInfo.selected_choice) correctCount++
             return ({
                 ...questionInfo,
                 userScore: questionInfo.correct_answer == questionInfo.selected_choice
             })
        }))
        setIsQuizDone(true)
+       setNumOfCorrect(correctCount)
     }
 
+    function resetQuiz() {
+        // fetchQuestions();
+        // setIsQuizDone(false)
+         location.reload();
+    }
     // useEffect(()=> { // FOR TESTING
     //     if (isQuizDone) {
     //         console.log("STATE OF QUESTIONS:", questions)
@@ -77,7 +89,10 @@ export default function QuizScreen() {
                     )
                 })}
             </main>
-            <button id="submit-btn" onClick={checkAnswers}>Check answers</button>
+            <section id="submit-section">
+                {numOfCorrect !== null && isQuizDone && <p>You scored {numOfCorrect}/{numOfQuestions} correct answers</p>}
+                <button id="submit-btn" onClick={isQuizDone ? resetQuiz : checkAnswers}>{isQuizDone ? "Play again" : "Check answers"}</button>
+            </section>
         </div>
     )
 }

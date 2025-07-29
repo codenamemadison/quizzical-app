@@ -15,10 +15,11 @@ export default function QuestionRow({info, index, updateChoices, isQuizDone}) {
                             "selected": choice == selected,
                             // if quiz is done (submitted)
                             "correct-answer": isQuizDone && choice === correctAns,
-                            "selected-incorrect": isQuizDone && choice == selected && choice != correctAns,
-                            "not-selected": isQuizDone && choice != selected && choice !== correctAns
+                            "selected-incorrect": isQuizDone && choice == selected && choice !== correctAns,
+                            "not-selected": isQuizDone && choice !== selected && choice !== correctAns
                         })}
                         onClick={()=> updateChoices(index, choice)}
+                        disabled={isQuizDone}
                         >
                             {choice}
                         </button>
